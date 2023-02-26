@@ -6,21 +6,26 @@
 <body>
 <div class="container">
     <h1>Earthquake Count</h1>
+    <label for="startTime">Start Time:</label>
+    <input type="text" id="startTime" name="startTime"><br><br>
+    <label for="endTime">End Time:</label>
+    <input type="text" id="endTime" name="endTime"><br><br>
     <button id="getCount">Get Count</button>
     <p id="response"></p>
 </div>
-
 <script>
     const getCountButton = document.querySelector('#getCount');
     const responseDiv = document.querySelector('#response');
 
     getCountButton.addEventListener('click', () => {
-        const apiUrl = 'https://earthquake.usgs.gov/fdsnws/event/1/count?starttime=2014-01-01&endtime=2014-01-02';
+        const startTime = document.querySelector('#startTime').value;
+        const endTime = document.querySelector('#endTime').value;
+        const apiUrl = `https://earthquake.usgs.gov/fdsnws/event/1/count?starttime=${startTime}&endtime=${endTime}`;
 
         fetch(apiUrl)
             .then(response => response.text())
             .then(data => {
-                responseDiv.textContent = `Number of earthquakes on January 1, 2014: ${data}`;
+                responseDiv.textContent = `Number of earthquakes between ${startTime} and ${endTime}: ${data}`;
             })
     });
 </script>
